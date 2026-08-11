@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GaloreFox — Minecraft, Mod & Video</title>
+
+<meta name="description"
+content="GaloreFox — Minecraft, mod, avventure e video in un'esperienza blu futuristica.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   GALOREFOX 2.1
+   Home
+   ========================================================= */
+
+:root {
+    --bg:#020611;
+    --bg2:#061326;
+    --blue:#1683ff;
+    --cyan:#00e5ff;
+    --purple:#765cff;
+    --white:#f5f9ff;
+    --muted:#91a4bd;
+    --border:rgba(70,170,255,.18);
+    --shadow:0 25px 80px rgba(0,85,255,.22);
+}
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html {
+    scroll-behavior:smooth;
+}
+
+body {
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 10% 20%,rgba(0,117,255,.17),transparent 30%),
+        radial-gradient(circle at 90% 10%,rgba(0,229,255,.12),transparent 25%),
+        radial-gradient(circle at 50% 90%,rgba(124,92,255,.13),transparent 35%),
+        var(--bg);
+    color:var(--white);
+    font-family:"Inter",sans-serif;
+    overflow-x:hidden;
+}
+
+body::before {
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:1000;
+    opacity:.035;
+    background-image:
+        linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);
+    background-size:45px 45px;
+}
+
+/* LOADER */
+
+#loader {
+    position:fixed;
+    inset:0;
+    background:#02050d;
+    z-index:9999;
+    display:grid;
+    place-items:center;
+    transition:.8s;
+}
+
+#loader.hide {
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-content {
+    text-align:center;
+}
+
+.loader-logo {
+    font-family:"Space Grotesk";
+    font-size:clamp(3rem,10vw,7rem);
+    font-weight:900;
+    letter-spacing:-5px;
+    background:linear-gradient(
+        90deg,
+        #1683ff,
+        #00e5ff,
+        #fff,
+        #1683ff
+    );
+    background-size:300%;
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:gradientFlow 2s linear infinite;
+}
+
+.loader-bar {
+    width:230px;
+    height:3px;
+    margin:25px auto;
+    background:rgba(255,255,255,.08);
+    overflow:hidden;
+    border-radius:50px;
+}
+
+.loader-bar::after {
+    content:"";
+    display:block;
+    width:40%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        var(--blue),
+        var(--cyan)
+    );
+    animation:loading 1.4s ease-in-out infinite;
+}
+
+.loader-subtitle {
+    color:#617993;
+    font-size:.7rem;
+    letter-spacing:3px;
+}
+
+@keyframes loading {
+    0% {transform:translateX(-150%);}
+    100% {transform:translateX(400%);}
+}
+
+/* CURSOR */
+
+.cursor {
+    position:fixed;
+    width:18px;
+    height:18px;
+    border:1px solid rgba(80,190,255,.9);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:10000;
+    transform:translate(-50%,-50%);
+    transition:.2s;
+    box-shadow:0 0 20px rgba(0,180,255,.7);
+}
+
+.cursor-dot {
+    position:fixed;
+    width:5px;
+    height:5px;
+    background:var(--cyan);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:10001;
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 15px var(--cyan);
+}
+
+@media(max-width:800px) {
+    .cursor,
+    .cursor-dot {
+        display:none;
+    }
+}
+
+/* NAV */
+
+nav {
+    position:fixed;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(1180px,calc(100% - 30px));
+    z-index:100;
+    padding:13px 18px;
+    border:1px solid var(--border);
+    background:rgba(3,10,22,.72);
+    backdrop-filter:blur(20px);
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 15px 60px rgba(0,0,0,.3);
+}
+
+.brand {
+    color:white;
+    text-decoration:none;
+    font-family:"Space Grotesk";
+    font-size:1.35rem;
+    font-weight:800;
+}
+
+.brand span {
+    color:var(--cyan);
+    text-shadow:0 0 20px rgba(0,229,255,.6);
+}
+
+nav ul {
+    list-style:none;
+    display:flex;
+    gap:6px;
+}
+
+nav ul a {
+    color:#aabbd0;
+    text-decoration:none;
+    font-size:.85rem;
+    font-weight:600;
+    padding:9px 13px;
+    border-radius:12px;
+    transition:.3s;
+}
+
+nav ul a:hover {
+    color:white;
+    background:rgba(30,130,255,.12);
+}
+
+.nav-button {
+    color:white;
+    text-decoration:none;
+    font-size:.82rem;
+    font-weight:800;
+    padding:10px 16px;
+    border-radius:12px;
+    background:linear-gradient(
+        135deg,
+        #1683ff,
+        #5c5cff
+    );
+    box-shadow:0 8px 25px rgba(50,100,255,.3);
+    transition:.3s;
+}
+
+.nav-button:hover {
+    transform:translateY(-2px);
+}
+
+.mobile-menu {
+    display:none;
+    border:0;
+    color:white;
+    background:transparent;
+    font-size:1.5rem;
+    cursor:pointer;
+}
+
+@media(max-width:750px) {
+    nav ul,
+    nav .nav-button {
+        display:none;
+    }
+
+    .mobile-menu {
+        display:block;
+    }
+}
+
+.mobile-nav {
+    position:fixed;
+    top:82px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(500px,calc(100% - 30px));
+    padding:15px;
+    background:rgba(3,12,28,.94);
+    border:1px solid var(--border);
+    border-radius:18px;
+    backdrop-filter:blur(20px);
+    z-index:90;
+    display:none;
+}
+
+.mobile-nav.active {
+    display:block;
+}
+
+.mobile-nav a {
+    display:block;
+    padding:14px;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+}
+
+/* BACKGROUND */
+
+.ambient {
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-1;
+}
+
+.orb {
+    position:absolute;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:.25;
+}
+
+.orb.one {
+    width:400px;
+    height:400px;
+    background:#006eff;
+    top:5%;
+    left:-10%;
+}
+
+.orb.two {
+    width:330px;
+    height:330px;
+    background:#00d9ff;
+    top:40%;
+    right:-8%;
+}
+
+.orb.three {
+    width:300px;
+    height:300px;
+    background:#714cff;
+    bottom:-5%;
+    left:40%;
+}
+
+/* HERO */
+
+.hero {
+    min-height:100vh;
+    padding:160px 20px 100px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    text-align:center;
+}
+
+.hero-content {
+    max-width:1000px;
+}
+
+.eyebrow {
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:8px 14px;
+    border:1px solid rgba(80,180,255,.22);
+    background:rgba(20,70,130,.18);
+    border-radius:100px;
+    color:#9bdcff;
+    font-size:.75rem;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    margin-bottom:25px;
+}
+
+.pulse {
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#00f0ff;
+    animation:pulse 1.7s infinite;
+}
+
+@keyframes pulse {
+    70% {
+        box-shadow:0 0 0 10px rgba(0,240,255,0);
+    }
+}
+
+h1 {
+    font-family:"Space Grotesk";
+    font-size:clamp(4rem,11vw,9.5rem);
+    line-height:.82;
+    letter-spacing:-8px;
+    font-weight:900;
+    margin-bottom:35px;
+}
+
+.gradient {
+    background:linear-gradient(
+        110deg,
+        #fff 10%,
+        #76c8ff 35%,
+        #1683ff 55%,
+        #00e5ff 75%,
+        #fff 95%
+    );
+    background-size:250%;
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:gradientFlow 5s linear infinite;
+}
+
+@keyframes gradientFlow {
+    0% {background-position:0%;}
+    100% {background-position:250%;}
+}
+
+.hero-description {
+    max-width:680px;
+    margin:auto;
+    color:var(--muted);
+    line-height:1.8;
+    font-size:1.05rem;
+}
+
+.hero-description strong {
+    color:#bfeaff;
+}
+
+.hero-actions {
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-top:35px;
+}
+
+.btn {
+    position:relative;
+    overflow:hidden;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    min-width:165px;
+    padding:15px 24px;
+    border-radius:14px;
+    text-decoration:none;
+    color:white;
+    font-weight:800;
+    transition:.3s;
+}
+
+.btn-primary {
+    background:linear-gradient(
+        135deg,
+        #087cff,
+        #5c4dff
+    );
+    box-shadow:0 15px 40px rgba(27,105,255,.35);
+}
+
+.btn-secondary {
+    border:1px solid rgba(100,180,255,.2);
+    background:rgba(255,255,255,.04);
+}
+
+.btn:hover {
+    transform:translateY(-5px);
+    box-shadow:0 20px 45px rgba(30,120,255,.4);
+}
+
+.scroll-indicator {
+    position:absolute;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%);
+    color:#66809d;
+    font-size:.7rem;
+    letter-spacing:2px;
+}
+
+.scroll-indicator::after {
+    content:"";
+    display:block;
+    width:1px;
+    height:35px;
+    margin:10px auto 0;
+    background:linear-gradient(
+        var(--blue),
+        transparent
+    );
+}
+
+/* SECTIONS */
+
+section {
+    width:min(1150px,calc(100% - 35px));
+    margin:auto;
+    padding:110px 0;
+}
+
+.section-heading {
+    margin-bottom:45px;
+}
+
+.section-label {
+    color:var(--cyan);
+    font-size:.72rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-weight:800;
+    margin-bottom:12px;
+}
+
+.section-heading h2 {
+    font-family:"Space Grotesk";
+    font-size:clamp(2.5rem,5vw,4.5rem);
+    letter-spacing:-3px;
+    line-height:1;
+}
+
+.blue-text {
+    color:#4fbaff;
+}
+
+.section-heading p {
+    color:var(--muted);
+    margin-top:16px;
+    max-width:600px;
+    line-height:1.7;
+}
+
+/* VIDEO */
+
+.video-grid {
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+}
+
+.video-card {
+    position:relative;
+    border-radius:25px;
+    overflow:hidden;
+    background:linear-gradient(
+        145deg,
+        rgba(15,35,70,.75),
+        rgba(5,14,29,.75)
+    );
+    border:1px solid var(--border);
+    transition:.5s;
+}
+
+.video-card:hover {
+    transform:translateY(-10px);
+    border-color:rgba(80,180,255,.45);
+    box-shadow:0 30px 80px rgba(0,80,255,.22);
+}
+
+.video-wrapper {
+    aspect-ratio:16/9;
+    background:#061a35;
+}
+
+.video-wrapper iframe {
+    width:100%;
+    height:100%;
+    border:0;
+    display:block;
+}
+
+.video-info {
+    padding:22px;
+}
+
+.video-tag {
+    display:inline-block;
+    color:#8edfff;
+    font-size:.65rem;
+    font-weight:800;
+    letter-spacing:2px;
+    margin-bottom:9px;
+}
+
+.video-info h3 {
+    font-family:"Space Grotesk";
+    font-size:1.3rem;
+    margin-bottom:8px;
+}
+
+.video-info p {
+    color:var(--muted);
+    font-size:.9rem;
+    line-height:1.6;
+}
+
+.video-meta {
+    display:flex;
+    justify-content:space-between;
+    margin-top:18px;
+    color:#6683a3;
+    font-size:.7rem;
+}
+
+/* SEE ALL */
+
+.section-more {
+    display:flex;
+    justify-content:center;
+    margin-top:35px;
+}
+
+.more-button {
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 22px;
+    border-radius:13px;
+    color:#a9e6ff;
+    text-decoration:none;
+    font-weight:800;
+    font-size:.85rem;
+    border:1px solid rgba(70,180,255,.22);
+    background:rgba(20,100,180,.08);
+    transition:.3s;
+}
+
+.more-button:hover {
+    transform:translateY(-4px);
+    color:white;
+    border-color:rgba(0,220,255,.55);
+    background:rgba(0,150,255,.13);
+    box-shadow:0 12px 35px rgba(0,120,255,.2);
+}
+
+@media(max-width:750px) {
+    .video-grid {
+        grid-template-columns:1fr;
+    }
+}
+
+/* MODS */
+
+.mods-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.mod-card {
+    position:relative;
+    min-height:260px;
+    padding:28px;
+    border:1px solid var(--border);
+    border-radius:23px;
+    overflow:hidden;
+    background:linear-gradient(
+        145deg,
+        rgba(12,35,68,.7),
+        rgba(4,13,27,.85)
+    );
+    transition:.4s;
+}
+
+.mod-card:hover {
+    transform:translateY(-9px);
+    border-color:rgba(0,210,255,.45);
+    box-shadow:0 25px 70px rgba(0,120,255,.18);
+}
+
+.mod-number {
+    position:absolute;
+    right:22px;
+    top:18px;
+    font-family:"Space Grotesk";
+    color:rgba(120,200,255,.12);
+    font-size:4rem;
+    font-weight:900;
+}
+
+.mod-icon {
+    width:58px;
+    height:58px;
+    display:grid;
+    place-items:center;
+    border-radius:16px;
+    background:rgba(20,130,255,.12);
+    border:1px solid rgba(70,180,255,.18);
+    font-size:1.6rem;
+    margin-bottom:30px;
+}
+
+.mod-card h3 {
+    font-family:"Space Grotesk";
+    font-size:1.35rem;
+    margin-bottom:10px;
+}
+
+.mod-card p {
+    color:var(--muted);
+    font-size:.88rem;
+    line-height:1.7;
+}
+
+.mod-pill {
+    display:inline-block;
+    margin-top:18px;
+    padding:6px 10px;
+    border-radius:8px;
+    background:rgba(0,180,255,.08);
+    color:#73d9ff;
+    font-size:.65rem;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+@media(max-width:850px) {
+    .mods-grid {
+        grid-template-columns:1fr;
+    }
+}
+
+/* ABOUT */
+
+.about-box {
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:30px;
+}
+
+.about-main,
+.about-side {
+    border:1px solid var(--border);
+    border-radius:28px;
+    background:linear-gradient(
+        145deg,
+        rgba(12,35,70,.65),
+        rgba(4,13,27,.8)
+    );
+}
+
+.about-main {
+    padding:45px;
+}
+
+.about-main h3 {
+    font-family:"Space Grotesk";
+    font-size:2rem;
+    margin-bottom:18px;
+}
+
+.about-main p {
+    color:var(--muted);
+    line-height:1.8;
+    margin-bottom:15px;
+}
+
+.about-side {
+    padding:35px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.stat {
+    padding:18px 0;
+    border-bottom:1px solid rgba(100,160,220,.1);
+}
+
+.stat:last-child {
+    border-bottom:0;
+}
+
+.stat strong {
+    display:block;
+    color:#70d8ff;
+    font-family:"Space Grotesk";
+    font-size:1.5rem;
+}
+
+.stat span {
+    color:var(--muted);
+    font-size:.8rem;
+}
+
+@media(max-width:750px) {
+    .about-box {
+        grid-template-columns:1fr;
+    }
+
+    .about-main {
+        padding:30px;
+    }
+}
+
+/* CTA */
+
+.cta {
+    text-align:center;
+    padding:90px 30px;
+    border-radius:35px;
+    border:1px solid rgba(75,170,255,.25);
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(0,160,255,.25),
+            transparent 45%
+        ),
+        linear-gradient(
+            135deg,
+            rgba(8,32,70,.85),
+            rgba(6,12,27,.9)
+        );
+    box-shadow:var(--shadow);
+}
+
+.cta h2 {
+    font-family:"Space Grotesk";
+    font-size:clamp(2.4rem,6vw,5rem);
+    letter-spacing:-3px;
+    margin-bottom:20px;
+}
+
+.cta p {
+    max-width:600px;
+    margin:auto;
+    color:var(--muted);
+    line-height:1.7;
+}
+
+/* FOOTER */
+
+footer {
+    width:min(1150px,calc(100% - 35px));
+    margin:auto;
+    padding:40px 0 50px;
+    border-top:1px solid rgba(100,150,200,.1);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#62768e;
+    font-size:.8rem;
+}
+
+.footer-logo {
+    font-family:"Space Grotesk";
+    color:#a9c9e8;
+    font-size:1rem;
+    font-weight:800;
+}
+
+@media(max-width:600px) {
+    footer {
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+    }
+}
+
+/* PARTICLES */
+
+.particle {
+    position:fixed;
+    width:3px;
+    height:3px;
+    background:#53baff;
+    border-radius:50%;
+    pointer-events:none;
+    opacity:0;
+    animation:particleFloat linear infinite;
+    z-index:-1;
+    box-shadow:0 0 10px #1683ff;
+}
+
+@keyframes particleFloat {
+    0% {
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    20% {
+        opacity:.8;
+    }
+
+    80% {
+        opacity:.4;
+    }
+
+    100% {
+        opacity:0;
+        transform:translateY(-100vh);
+    }
+}
+
+/* REVEAL */
+
+.reveal {
+    opacity:0;
+    transform:translateY(40px);
+    transition:
+        opacity .8s ease,
+        transform .8s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.visible {
+    opacity:1;
+    transform:translateY(0);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-dot"></div>
+
+<div id="loader">
+    <div class="loader-content">
+        <div class="loader-logo">GaloreFox</div>
+        <div class="loader-bar"></div>
+        <div class="loader-subtitle">
+            CARICAMENTO...
+        </div>
+    </div>
+</div>
+
+<div class="ambient">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+</div>
+
+<nav>
+
+    <a href="#home" class="brand">
+        Galore<span>Fox</span>
+    </a>
+
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#videos">Video</a></li>
+        <li><a href="#mods">Mods</a></li>
+        <li><a href="#about">About</a></li>
+    </ul>
+
+    <a
+        href="https://www.youtube.com/"
+        target="_blank"
+        class="nav-button"
+    >
+        YouTube ↗
+    </a>
+
+    <button class="mobile-menu">☰</button>
+
+</nav>
+
+<div class="mobile-nav">
+
+    <a href="#home">Home</a>
+    <a href="#videos">Video</a>
+    <a href="#mods">Mods</a>
+    <a href="#about">About</a>
+
+    <a
+        href="https://www.youtube.com/"
+        target="_blank"
+    >
+        YouTube ↗
+    </a>
+
+</div>
+
+<main id="home">
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            <span class="pulse"></span>
+            Version • 2.0 • Sperimental
+        </div>
+
+        <h1>
+            <span class="gradient">GaloreFox</span>
+        </h1>
+
+        <p class="hero-description">
+
+            Benvenuto nel <strong>Sito blu</strong>.
+
+            Qui trovi Tutti i miei video Minecraft, tutte le mod assurde
+            che ho usato,
+             le avventure, gli esperimenti e tutti i video
+            che porto sul canale.
+
+            <br><br>
+
+            <strong>
+                AGGIORNAMENTI:
+                <ul>
+                    <li>Modificata tutta l'estetica del sito.</li>
+                </ul>
+            </strong>
+
+        </p>
+
+        <div class="hero-actions">
+
+            <a href="#videos" class="btn btn-primary">
+                ▶ Guarda i video
+            </a>
+
+            <a href="#mods" class="btn btn-secondary">
+                🧩 Scopri le mod
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="scroll-indicator">
+        SCROLL
+    </div>
+
+</section>
+
+
+<!-- ================= VIDEO ================= -->
+
+<section id="videos">
+
+    <div class="section-heading reveal">
+
+        <div class="section-label">
+            - Gli ultimi uploads
+        </div>
+
+        <h2>
+            I miei<br>
+            <span class="blue-text">video.</span>
+        </h2>
+
+        <p>
+            Qui ci sono tutti gli ultimi video!
+        </p>
+
+    </div>
+
+    <div class="video-grid">
+
+        <article class="video-card reveal">
+
+            <div class="video-wrapper">
+
+                <iframe
+                    src="https://www.youtube.com/embed/VIDEO_ID_1"
+                    title="GaloreFox video 1"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+
+            </div>
+
+            <div class="video-info">
+
+                <span class="video-tag">
+                    VANILLA
+                </span>
+
+                <h3>
+                    La mia nuova avventura
+                </h3>
+
+                <p>
+                    Una nuova avventura nel mondo
+                    di Minecraft.
+                </p>
+
+                <div class="video-meta">
+                    <span>NESSUNA SERIE</span>
+                    <span>GALOREFOX</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article class="video-card reveal">
+
+            <div class="video-wrapper">
+
+                <iframe
+                    src="https://www.youtube.com/embed/VIDEO_ID_2"
+                    title="GaloreFox video 2"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+
+            </div>
+
+            <div class="video-info">
+
+                <span class="video-tag">
+                    MODDATO
+                </span>
+
+                <h3>
+                    Minecraft ma con troppe mod
+                </h3>
+
+                <p>
+                    Cosa potrebbe andare storto?
+                    Probabilmente tutto.
+                </p>
+
+                <div class="video-meta">
+                    <span>NESSUNA SERIE</span>
+                    <span>GALOREFOX</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article class="video-card reveal">
+
+            <div class="video-wrapper">
+
+                <iframe
+                    src="https://www.youtube.com/embed/VIDEO_ID_3"
+                    title="GaloreFox video 3"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+
+            </div>
+
+            <div class="video-info">
+
+                <span class="video-tag">
+                    VANILLA
+                </span>
+
+                <h3>
+                    Una challenge impossibile
+                </h3>
+
+                <p>
+                    Una delle mie challenge più folli.
+                </p>
+
+                <div class="video-meta">
+                    <span>CHALLENGE PAZZE</span>
+                    <span>GALOREFOX</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article class="video-card reveal">
+
+            <div class="video-wrapper">
+
+                <iframe
+                    src="https://www.youtube.com/embed/VIDEO_ID_4"
+                    title="GaloreFox video 4"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+
+            </div>
+
+            <div class="video-info">
+
+                <span class="video-tag">
+                    VANILLA
+                </span>
+
+                <h3>
+                    La Fox Den cresce
+                </h3>
+
+                <p>
+                    Nuovi progetti e nuove avventure.
+                </p>
+
+                <div class="video-meta">
+                    <span>CREATECRAFT</span>
+                    <span>GALOREFOX</span>
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+    <!-- NUOVO PULSANTE -->
+
+    <div class="section-more reveal">
+
+        <a
+            href="videos.html"
+            class="more-button"
+        >
+            🎬 Vedi tutti i video →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MODS ================= -->
+
+<section id="mods">
+
+    <div class="section-heading reveal">
+
+        <div class="section-label">
+            - Mods
+        </div>
+
+        <h2>
+            Le<br>
+            <span class="blue-text">
+                mods.
+            </span>
+        </h2>
+
+        <p>
+            Alcune delle mod che ho usato
+            che rendono Minecraft ancora più folle.
+        </p>
+
+    </div>
+
+
+    <div class="mods-grid">
+
+        <article class="mod-card reveal">
+
+            <div class="mod-number">CREATECRAFT</div>
+
+            <div class="mod-icon">⚙️</div>
+
+            <h3>Tech Mods</h3>
+
+            <p>
+                Macchine, energia, automazione
+                e fabbriche gigantesche.
+            </p>
+
+            <span class="mod-pill">
+                TECNOLOGIA
+            </span>
+
+        </article>
+
+
+        <article class="mod-card reveal">
+
+            <div class="mod-number">MAGICRAFT</div>
+
+            <div class="mod-icon">✨</div>
+
+            <h3>Magic Mods</h3>
+
+            <p>
+                Magia, dimensioni misteriose,
+                incantesimi e poteri.
+            </p>
+
+            <span class="mod-pill">
+                MAGIA
+            </span>
+
+        </article>
+
+
+        <article class="mod-card reveal">
+
+            <div class="mod-number"></div>
+
+            <div class="mod-icon">🐉</div>
+
+            <h3>Adventure Mods</h3>
+
+            <p>
+                Nuovi mob, boss, dungeon,
+                biomi e mondi da esplorare.
+            </p>
+
+            <span class="mod-pill">
+                AVVENTURA
+            </span>
+
+        </article>
+
+    </div>
+
+
+    <!-- NUOVO PULSANTE -->
+
+    <div class="section-more reveal">
+
+        <a
+            href="mods.html"
+            class="more-button"
+        >
+            🧩 Esplora tutte le mod →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about">
+
+    <div class="section-heading reveal">
+
+        <div class="section-label">
+            - Chi sono
+        </div>
+
+        <h2>
+            Chi è<br>
+            <span class="blue-text">
+                Fox?
+            </span>
+        </h2>
+
+    </div>
+
+
+    <div class="about-box">
+
+        <div class="about-main reveal">
+
+            <h3>
+                Chi è GaloreFox?
+            </h3>
+
+            <p>
+                Sono un aspirante YouTuber appassionato
+                di Minecraft e soprattutto di tutto
+                quello che permette di trasformarlo
+                con le mod.
+            </p>
+
+            <p>
+                Sul mio canale whatsapp (e tra poco youtube) porto avventure, esperimenti,
+                challenge e idee che mi vengono in mente
+                mentre gioco.
+            </p>
+
+            <p>
+                Questo sito è il mio primo sito dove pubblico i miei video: il <strong>Sito blu</strong>.
+            </p>
+
+        </div>
+
+
+        <div class="about-side reveal">
+
+            <div class="stat">
+                <strong>🦊</strong>
+                <span>Fox</span>
+            </div>
+
+            <div class="stat">
+                <strong>⛏️</strong>
+                <span>Minecraft</span>
+            </div>
+
+            <div class="stat">
+                <strong>🧩</strong>
+                <span>Modded Gameplay</span>
+            </div>
+
+            <div class="stat">
+                <strong>💙</strong>
+                <span>Blue Aesthetic</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section>
+
+    <div class="cta reveal">
+
+        <div class="section-label">
+            - Iscriviti al canale
+        </div>
+
+        <h2>
+            Iscriviti ai mio canale<br>
+            <span class="blue-text">
+                Youtube.
+            </span>
+        </h2>
+
+        <p>
+            Se ti piace Minecraft, le mod e le mie
+            avventure, guarda anche il mio canale youtube.
+        </p>
+
+        <div class="hero-actions">
+
+            <a
+                href="https://www.youtube.com/"
+                target="_blank"
+                class="btn btn-primary"
+            >
+                ▶ Vai su YouTube (Il mio canale per ora non esiste.)
+            </a>
+
+            <a
+                href="#home"
+                class="btn btn-secondary"
+            >
+                ↑ Torna su
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-logo">
+        GaloreFox
+    </div>
+
+    <div>
+        © <span id="year"></span>
+        GaloreFox — Tutti i diritti riservati.
+    </div>
+
+</footer>
+
+
+<script>
+
+/* LOADER */
+
+window.addEventListener("load", () => {
+
+    setTimeout(() => {
+
+        document
+            .getElementById("loader")
+            .classList.add("hide");
+
+    },900);
+
+});
+
+
+/* CURSOR */
+
+const cursor =
+    document.querySelector(".cursor");
+
+const cursorDot =
+    document.querySelector(".cursor-dot");
+
+let mouseX = 0;
+let mouseY = 0;
+
+let currentX = 0;
+let currentY = 0;
+
+document.addEventListener(
+    "mousemove",
+    e => {
+
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        cursorDot.style.left =
+            mouseX + "px";
+
+        cursorDot.style.top =
+            mouseY + "px";
+
+    }
+);
+
+function animateCursor() {
+
+    currentX +=
+        (mouseX-currentX)*.12;
+
+    currentY +=
+        (mouseY-currentY)*.12;
+
+    cursor.style.left =
+        currentX + "px";
+
+    cursor.style.top =
+        currentY + "px";
+
+    requestAnimationFrame(
+        animateCursor
+    );
+
+}
+
+animateCursor();
+
+
+/* CURSOR HOVER */
+
+document
+    .querySelectorAll(
+        "a,button,.video-card,.mod-card"
+    )
+    .forEach(el => {
+
+        el.addEventListener(
+            "mouseenter",
+            () => {
+
+                cursor.style.width="45px";
+                cursor.style.height="45px";
+
+            }
+        );
+
+        el.addEventListener(
+            "mouseleave",
+            () => {
+
+                cursor.style.width="18px";
+                cursor.style.height="18px";
+
+            }
+        );
+
+    });
+
+
+/* REVEAL */
+
+const observer =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if(entry.isIntersecting) {
+
+                    entry.target
+                        .classList
+                        .add("visible");
+
+                    observer.unobserve(
+                        entry.target
+                    );
+
+                }
+
+            });
+
+        },
+        {
+            threshold:.12
+        }
+    );
+
+document
+    .querySelectorAll(".reveal")
+    .forEach(el => {
+
+        observer.observe(el);
+
+    });
+
+
+/* PARTICLES */
+
+for(let i=0;i<45;i++) {
+
+    const particle =
+        document.createElement("div");
+
+    particle.className="particle";
+
+    particle.style.left =
+        Math.random()*100+"vw";
+
+    particle.style.top =
+        Math.random()*100+"vh";
+
+    particle.style.animationDuration =
+        5+Math.random()*10+"s";
+
+    particle.style.animationDelay =
+        Math.random()*10+"s";
+
+    document.body.appendChild(
+        particle
+    );
+
+}
+
+
+/* PARALLAX */
+
+window.addEventListener(
+    "mousemove",
+    e => {
+
+        const x =
+            e.clientX/
+            window.innerWidth-.5;
+
+        const y =
+            e.clientY/
+            window.innerHeight-.5;
+
+        document.querySelector(".orb.one")
+            .style.transform=
+            `translate(${x*35}px,${y*35}px)`;
+
+        document.querySelector(".orb.two")
+            .style.transform=
+            `translate(${x*-45}px,${y*-25}px)`;
+
+        document.querySelector(".orb.three")
+            .style.transform=
+            `translate(${x*25}px,${y*-35}px)`;
+
+    }
+);
+
+
+/* MOBILE MENU */
+
+const mobileButton =
+    document.querySelector(".mobile-menu");
+
+const mobileNav =
+    document.querySelector(".mobile-nav");
+
+mobileButton.addEventListener(
+    "click",
+    () => {
+
+        mobileNav.classList.toggle(
+            "active"
+        );
+
+    }
+);
+
+document
+    .querySelectorAll(".mobile-nav a")
+    .forEach(link => {
+
+        link.addEventListener(
+            "click",
+            () => {
+
+                mobileNav.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+    });
+
+
+/* YEAR */
+
+document.getElementById("year")
+    .textContent =
+    new Date().getFullYear();
+
+</script>
+
+</body>
+</html>

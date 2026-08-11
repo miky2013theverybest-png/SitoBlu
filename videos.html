@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GaloreFox — Tutti i video</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+    --bg:#020611;
+    --blue:#1683ff;
+    --cyan:#00e5ff;
+    --white:#f5f9ff;
+    --muted:#91a4bd;
+    --border:rgba(70,170,255,.18);
+}
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html {
+    scroll-behavior:smooth;
+}
+
+body {
+    min-height:100vh;
+
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(0,117,255,.17),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(0,229,255,.12),
+            transparent 25%
+        ),
+        var(--bg);
+
+    color:var(--white);
+
+    font-family:"Inter",sans-serif;
+}
+
+body::before {
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.035;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.5) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.5) 1px,
+            transparent 1px
+        );
+
+    background-size:45px 45px;
+}
+
+nav {
+    position:fixed;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:min(
+        1180px,
+        calc(100% - 30px)
+    );
+
+    padding:13px 18px;
+
+    border:1px solid var(--border);
+
+    background:rgba(3,10,22,.75);
+
+    backdrop-filter:blur(20px);
+
+    border-radius:20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    z-index:100;
+}
+
+.brand {
+    color:white;
+    text-decoration:none;
+
+    font-family:"Space Grotesk";
+
+    font-size:1.35rem;
+    font-weight:800;
+}
+
+.brand span {
+    color:var(--cyan);
+}
+
+nav ul {
+    list-style:none;
+    display:flex;
+    gap:8px;
+}
+
+nav a {
+    color:#aabbd0;
+    text-decoration:none;
+    font-size:.85rem;
+    font-weight:600;
+}
+
+nav ul a {
+    padding:9px 13px;
+    border-radius:10px;
+}
+
+nav ul a:hover {
+    color:white;
+    background:rgba(30,130,255,.12);
+}
+
+.back-button {
+    padding:10px 16px;
+    border-radius:12px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1683ff,
+            #5c5cff
+        );
+}
+
+main {
+    width:min(
+        1150px,
+        calc(100% - 35px)
+    );
+
+    margin:auto;
+
+    padding-top:150px;
+    padding-bottom:100px;
+}
+
+.header {
+    text-align:center;
+    padding:70px 0 70px;
+}
+
+.label {
+    color:var(--cyan);
+    font-size:.72rem;
+    font-weight:800;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-bottom:15px;
+}
+
+h1 {
+    font-family:"Space Grotesk";
+
+    font-size:
+        clamp(
+            3rem,
+            8vw,
+            7rem
+        );
+
+    line-height:.9;
+
+    letter-spacing:-5px;
+
+    margin-bottom:25px;
+
+    background:
+        linear-gradient(
+            110deg,
+            white,
+            #76c8ff,
+            #1683ff,
+            #00e5ff
+        );
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+}
+
+.header p {
+    max-width:650px;
+    margin:auto;
+
+    color:var(--muted);
+
+    line-height:1.8;
+}
+
+.video-grid {
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:25px;
+}
+
+.video-card {
+    overflow:hidden;
+
+    border-radius:25px;
+
+    border:1px solid var(--border);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15,35,70,.75),
+            rgba(5,14,29,.8)
+        );
+
+    transition:.4s;
+}
+
+.video-card:hover {
+    transform:translateY(-9px);
+
+    border-color:
+        rgba(80,180,255,.45);
+
+    box-shadow:
+        0 30px 80px
+        rgba(0,80,255,.22);
+}
+
+.video-wrapper {
+    aspect-ratio:16/9;
+}
+
+.video-wrapper iframe {
+    width:100%;
+    height:100%;
+    border:0;
+}
+
+.info {
+    padding:22px;
+}
+
+.tag {
+    color:#8edfff;
+
+    font-size:.65rem;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+}
+
+h2 {
+    font-family:"Space Grotesk";
+
+    font-size:1.3rem;
+
+    margin:10px 0;
+}
+
+.info p {
+    color:var(--muted);
+
+    line-height:1.6;
+
+    font-size:.9rem;
+}
+
+.meta {
+    display:flex;
+    justify-content:space-between;
+
+    margin-top:18px;
+
+    color:#6683a3;
+
+    font-size:.7rem;
+}
+
+footer {
+    width:min(
+        1150px,
+        calc(100% - 35px)
+    );
+
+    margin:auto;
+
+    padding:40px 0 50px;
+
+    border-top:
+        1px solid
+        rgba(100,150,200,.1);
+
+    display:flex;
+    justify-content:space-between;
+
+    color:#62768e;
+
+    font-size:.8rem;
+}
+
+@media(max-width:750px) {
+
+    nav ul {
+        display:none;
+    }
+
+    .video-grid {
+        grid-template-columns:1fr;
+    }
+
+    footer {
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+    <a href="index.html" class="brand">
+        Galore<span>Fox</span>
+    </a>
+
+    <ul>
+
+        <li>
+            <a href="index.html">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="videos.html">
+                Video
+            </a>
+        </li>
+
+        <li>
+            <a href="mods.html">
+                Mods
+            </a>
+        </li>
+
+    </ul>
+
+    <a
+        href="index.html"
+        class="back-button"
+    >
+        ← Home
+    </a>
+
+</nav>
+
+
+<main>
+
+    <header class="header">
+
+        <div class="label">
+            - Video
+        </div>
+
+        <h1>
+            Tutti i<br>
+            video.
+        </h1>
+
+        <p>
+            Benvenuto nell'archivio completo
+            del Sito blu. Qui trovi tutte le mie
+            avventure, challenge, survival e il resto dei miei video.
+        </p>
+
+    </header>
+
+
+    <div class="video-grid">
+
+
+        <!-- VIDEO -->
+
+        <article class="video-card">
+
+            <div class="video-wrapper">
+
+                <iframe
+                    src="https://www.youtube.com/embed/VIDEO_ID_1"
+                    title="GaloreFox video"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+
+            </div>
+
+            <div class="info">
+
+                <span class="tag">
+                    MINECRAFT
+                </span>
+
+                <h2>
+                    La mia nuova avventura
+                </h2>
+
+                <p>
+                    Una nuova avventura nella Fox Den.
+                </p>
+
+                <div class="meta">
+                    <span>VIDEO #01</span>
+                    <span>GALOREFOX</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article class="video-card">
+
+            <div class="video-wrapper">
+
+                <iframe
+                    src="https://www.youtube.com/embed/VIDEO_ID_2"
+                    title="GaloreFox video"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+
+            </div>
+
+            <div class="info">
+
+                <span class="tag">
+                    MODDED
+                </span>
+
+                <h2>
+                    Minecraft con troppe mod
+                </h2>
+
+                <p>
+                    Un mondo completamente modificato.
+                </p>
+
+                <div class="meta">
+                    <span>VIDEO #02</span>
+                    <span>GALOREFOX</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article class="video-card">
+
+            <div class="video-wrapper">
+
+                <iframe
+                    src="https://www.youtube.com/embed/VIDEO_ID_3"
+                    title="GaloreFox video"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+
+            </div>
+
+            <div class="info">
+
+                <span class="tag">
+                    CHALLENGE
+                </span>
+
+                <h2>
+                    Una challenge impossibile
+                </h2>
+
+                <p>
+                    Una challenge completamente folle.
+                </p>
+
+                <div class="meta">
+                    <span>VIDEO #03</span>
+                    <span>GALOREFOX</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article class="video-card">
+
+            <div class="video-wrapper">
+
+                <iframe
+                    src="https://www.youtube.com/embed/VIDEO_ID_4"
+                    title="GaloreFox video"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+
+            </div>
+
+            <div class="info">
+
+                <span class="tag">
+                    SURVIVAL
+                </span>
+
+                <h2>
+                    La Fox Den cresce
+                </h2>
+
+                <p>
+                    Nuove costruzioni e nuove avventure.
+                </p>
+
+                <div class="meta">
+                    <span>VIDEO #04</span>
+                    <span>GALOREFOX</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!--
+            PER AGGIUNGERE UN ALTRO VIDEO:
+
+            COPIA UNA <article class="video-card">
+            E CAMBIA VIDEO_ID, TITOLO E DESCRIZIONE.
+        -->
+
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <strong>
+        GaloreFox
+    </strong>
+
+    <span>
+        © <span id="year"></span>
+        GaloreFox — Tutti i diritti riservati.
+    </span>
+
+</footer>
+
+
+<script>
+
+document.getElementById("year")
+    .textContent =
+    new Date().getFullYear();
+
+</script>
+
+</body>
+</html>

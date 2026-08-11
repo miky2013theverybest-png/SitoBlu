@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GaloreFox — Minecraft Mods</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+    --bg:#020611;
+    --blue:#1683ff;
+    --cyan:#00e5ff;
+    --white:#f5f9ff;
+    --muted:#91a4bd;
+    --border:rgba(70,170,255,.18);
+}
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html {
+    scroll-behavior:smooth;
+}
+
+body {
+
+    min-height:100vh;
+
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(0,117,255,.17),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(0,229,255,.12),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 50% 90%,
+            rgba(124,92,255,.13),
+            transparent 35%
+        ),
+        var(--bg);
+
+    color:var(--white);
+
+    font-family:"Inter",sans-serif;
+
+}
+
+body::before {
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    opacity:.035;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.5) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.5) 1px,
+            transparent 1px
+        );
+
+    background-size:45px 45px;
+
+}
+
+
+/* NAV */
+
+nav {
+
+    position:fixed;
+
+    top:18px;
+
+    left:50%;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        min(
+            1180px,
+            calc(100% - 30px)
+        );
+
+    padding:13px 18px;
+
+    border:
+        1px solid var(--border);
+
+    background:
+        rgba(3,10,22,.75);
+
+    backdrop-filter:
+        blur(20px);
+
+    border-radius:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    z-index:100;
+
+}
+
+.brand {
+
+    color:white;
+
+    text-decoration:none;
+
+    font-family:
+        "Space Grotesk";
+
+    font-size:1.35rem;
+
+    font-weight:800;
+
+}
+
+.brand span {
+    color:var(--cyan);
+}
+
+nav ul {
+
+    list-style:none;
+
+    display:flex;
+
+    gap:8px;
+
+}
+
+nav ul a {
+
+    color:#aabbd0;
+
+    text-decoration:none;
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+    padding:9px 13px;
+
+    border-radius:10px;
+
+}
+
+nav ul a:hover {
+
+    color:white;
+
+    background:
+        rgba(30,130,255,.12);
+
+}
+
+.back-button {
+
+    padding:10px 16px;
+
+    border-radius:12px;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:.82rem;
+
+    font-weight:800;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1683ff,
+            #5c5cff
+        );
+
+}
+
+
+/* MAIN */
+
+main {
+
+    width:
+        min(
+            1150px,
+            calc(100% - 35px)
+        );
+
+    margin:auto;
+
+    padding-top:150px;
+
+    padding-bottom:100px;
+
+}
+
+
+/* HEADER */
+
+.header {
+
+    text-align:center;
+
+    padding:
+        70px 0;
+
+}
+
+.label {
+
+    color:var(--cyan);
+
+    font-size:.72rem;
+
+    font-weight:800;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    margin-bottom:15px;
+
+}
+
+h1 {
+
+    font-family:
+        "Space Grotesk";
+
+    font-size:
+        clamp(
+            3rem,
+            8vw,
+            7rem
+        );
+
+    line-height:.9;
+
+    letter-spacing:-5px;
+
+    margin-bottom:25px;
+
+    background:
+        linear-gradient(
+            110deg,
+            white,
+            #76c8ff,
+            #1683ff,
+            #00e5ff
+        );
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+}
+
+.header p {
+
+    max-width:650px;
+
+    margin:auto;
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+}
+
+
+/* MOD GRID */
+
+.mods-grid {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:20px;
+
+}
+
+.mod {
+
+    position:relative;
+
+    min-height:330px;
+
+    padding:30px;
+
+    overflow:hidden;
+
+    border-radius:25px;
+
+    border:
+        1px solid var(--border);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(12,35,68,.75),
+            rgba(4,13,27,.9)
+        );
+
+    transition:.4s;
+
+}
+
+.mod:hover {
+
+    transform:
+        translateY(-10px);
+
+    border-color:
+        rgba(0,220,255,.5);
+
+    box-shadow:
+        0 30px 80px
+        rgba(0,100,255,.2);
+
+}
+
+.mod-number {
+
+    position:absolute;
+
+    right:20px;
+
+    top:15px;
+
+    color:
+        rgba(100,200,255,.1);
+
+    font-family:
+        "Space Grotesk";
+
+    font-size:5rem;
+
+    font-weight:900;
+
+}
+
+.mod-icon {
+
+    width:65px;
+
+    height:65px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:18px;
+
+    background:
+        rgba(20,130,255,.12);
+
+    border:
+        1px solid
+        rgba(70,180,255,.2);
+
+    font-size:1.8rem;
+
+    margin-bottom:30px;
+
+}
+
+.mod h2 {
+
+    font-family:
+        "Space Grotesk";
+
+    font-size:1.5rem;
+
+    margin-bottom:12px;
+
+}
+
+.mod p {
+
+    color:var(--muted);
+
+    line-height:1.7;
+
+    font-size:.9rem;
+
+}
+
+.category {
+
+    display:inline-block;
+
+    margin-top:20px;
+
+    padding:7px 11px;
+
+    border-radius:8px;
+
+    color:#73d9ff;
+
+    background:
+        rgba(0,180,255,.08);
+
+    font-size:.65rem;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+
+}
+
+.mod-link {
+
+    display:inline-flex;
+
+    margin-top:18px;
+
+    color:#a9e6ff;
+
+    text-decoration:none;
+
+    font-size:.8rem;
+
+    font-weight:800;
+
+}
+
+.mod-link:hover {
+    color:white;
+}
+
+
+/* FOOTER */
+
+footer {
+
+    width:
+        min(
+            1150px,
+            calc(100% - 35px)
+        );
+
+    margin:auto;
+
+    padding:
+        40px 0 50px;
+
+    border-top:
+        1px solid
+        rgba(100,150,200,.1);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#62768e;
+
+    font-size:.8rem;
+
+}
+
+@media(max-width:900px) {
+
+    .mods-grid {
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:650px) {
+
+    nav ul {
+        display:none;
+    }
+
+    .mods-grid {
+
+        grid-template-columns:1fr;
+
+    }
+
+    footer {
+
+        flex-direction:column;
+
+        gap:15px;
+
+        text-align:center;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<nav>
+
+    <a
+        href="index.html"
+        class="brand"
+    >
+        Galore<span>Fox</span>
+    </a>
+
+
+    <ul>
+
+        <li>
+            <a href="index.html">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="videos.html">
+                Video
+            </a>
+        </li>
+
+        <li>
+            <a href="mods.html">
+                Mods
+            </a>
+        </li>
+
+    </ul>
+
+
+    <a
+        href="index.html"
+        class="back-button"
+    >
+        ← Home
+    </a>
+
+</nav>
+
+
+<main>
+
+
+<header class="header">
+
+    <div class="label">
+        - Mods
+    </div>
+
+    <h1>
+        Minecraft<br>
+        Mods.
+    </h1>
+
+    <p>
+        Benvenuto nella sezione dedicata alle mod
+        del Sito blu. Qui puoi raccogliere tutte
+        le mod che uso, provo o consiglio.
+    </p>
+
+</header>
+
+
+<div class="mods-grid">
+
+
+<!-- MOD 1 -->
+
+<article class="mod">
+
+    <div class="mod-number">
+        01
+    </div>
+
+    <div class="mod-icon">
+        ⚙️
+    </div>
+
+    <h2>
+        Tech Mods
+    </h2>
+
+    <p>
+        Macchine, energia, automazione,
+        fabbriche e sistemi tecnologici.
+    </p>
+
+    <span class="category">
+        TECHNOLOGY
+    </span>
+
+    <br>
+
+    <a
+        href="#"
+        class="mod-link"
+    >
+        Scopri la mod →
+    </a>
+
+</article>
+
+
+<!-- MOD 2 -->
+
+<article class="mod">
+
+    <div class="mod-number">
+        02
+    </div>
+
+    <div class="mod-icon">
+        ✨
+    </div>
+
+    <h2>
+        Magic Mods
+    </h2>
+
+    <p>
+        Incantesimi, magia, rituali,
+        dimensioni e poteri speciali.
+    </p>
+
+    <span class="category">
+        MAGIC
+    </span>
+
+    <br>
+
+    <a
+        href="#"
+        class="mod-link"
+    >
+        Scopri la mod →
+    </a>
+
+</article>
+
+
+<!-- MOD 3 -->
+
+<article class="mod">
+
+    <div class="mod-number">
+        03
+    </div>
+
+    <div class="mod-icon">
+        🐉
+    </div>
+
+    <h2>
+        Adventure Mods
+    </h2>
+
+    <p>
+        Boss, dungeon, nuovi mob,
+        biomi e dimensioni da esplorare.
+    </p>
+
+    <span class="category">
+        ADVENTURE
+    </span>
+
+    <br>
+
+    <a
+        href="#"
+        class="mod-link"
+    >
+        Scopri la mod →
+    </a>
+
+</article>
+
+
+<!-- MOD 4 -->
+
+<article class="mod">
+
+    <div class="mod-number">
+        04
+    </div>
+
+    <div class="mod-icon">
+        🌌
+    </div>
+
+    <h2>
+        Dimension Mods
+    </h2>
+
+    <p>
+        Nuovi mondi e dimensioni
+        completamente diverse dal normale.
+    </p>
+
+    <span class="category">
+        DIMENSIONS
+    </span>
+
+    <br>
+
+    <a
+        href="#"
+        class="mod-link"
+    >
+        Scopri la mod →
+    </a>
+
+</article>
+
+
+<!-- MOD 5 -->
+
+<article class="mod">
+
+    <div class="mod-number">
+        05
+    </div>
+
+    <div class="mod-icon">
+        🏗️
+    </div>
+
+    <h2>
+        Building Mods
+    </h2>
+
+    <p>
+        Costruzioni, decorazioni,
+        blocchi e nuovi modi per creare.
+    </p>
+
+    <span class="category">
+        BUILDING
+    </span>
+
+    <br>
+
+    <a
+        href="#"
+        class="mod-link"
+    >
+        Scopri la mod →
+    </a>
+
+</article>
+
+
+<!-- MOD 6 -->
+
+<article class="mod">
+
+    <div class="mod-number">
+        06
+    </div>
+
+    <div class="mod-icon">
+        🧪
+    </div>
+
+    <h2>
+        Crazy Mods
+    </h2>
+
+    <p>
+        Le mod più strane, divertenti
+        e completamente fuori controllo.
+    </p>
+
+    <span class="category">
+        FUN
+    </span>
+
+    <br>
+
+    <a
+        href="#"
+        class="mod-link"
+    >
+        Scopri la mod →
+    </a>
+
+</article>
+
+
+</div>
+
+</main>
+
+
+<footer>
+
+    <strong>
+        GaloreFox 🦊
+    </strong>
+
+    <span>
+        © <span id="year"></span>
+        GaloreFox — Tutti i diritti riservati.
+    </span>
+
+</footer>
+
+
+<script>
+
+document.getElementById("year")
+    .textContent =
+    new Date().getFullYear();
+
+</script>
+
+</body>
+</html>
